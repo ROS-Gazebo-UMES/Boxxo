@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+
+<robot name="boxxo" xmlns:xacro="http://www.ros.org/wiki/xacro">
+   
+<xacro:macro name="wheel" params="prefix parent wheelrad wheeldepth wheelkg *origin *inertia">
+	
+	<xacro:property name="PI" value="3.1415926535897931"/> 
+	
+	<link name="${prefix}_wheel_link">
+		<visual>
+			<origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+			<geometry>
+				<cylinder radius="${wheelrad}" length="${wheeldepth}"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+			<geometry>
+				<cylinder radius="${wheelrad}" length="${wheeldepth}"/>
+			</geometry>
+		</collision>
+
+		<inertial>
+			<origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+			<mass value="${wheelkg}"/>
+			<xacro:insert_block name="inertia"/>
+		</inertial>
+	</link>
+	
+	<joint name="${prefix}_wheel" type="continuous">
+		<parent link="${parent}"/>
+		<child link="${prefix}_wheel_link"/>
+		<xacro:insert_block name="origin"/>
+		<axis xyz="0 1 0"/>
+	</joint>
+	
+	<transmission name="${prefix}_wheel_trans">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="${prefix}_wheel">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+		</joint>
+		<actuator>
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			<mechanicalreduction>1</mechanicalreduction>
+		</actuator>
+	</transmission>
+
+	
+</xacro:macro>
+</robot>
