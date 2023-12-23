@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+
+<robot name="boxxo_arm" xmlns:xacro="https://wiki.ros.org/xacro">
+	
+	<!-- <xacro:include filename=""/> -->
+	<xacro:macro name="boxxo_arm" params="endeffector prefix parent *origin">
+	
+		<xacro:property name="motor_height" value=".15"/>
+		<xacro:property name="link_diameter" value=".15"/>
+		<xacro:property name="base_to_j1" value=".3"/>
+		<xacro:property name="j1_to_j2" value="0.0"/>
+		<xacro:property name="j2_to_j3" value=".4"/>
+		<xacro:property name="j3_to_j4" value=".4"/>
+		<xacro:property name="j4_to_j5" value=".6"/>
+		<xacro:property name="ee_length" value=".15"/>
+		
+		
+		<!-- JOINT 1 -->
+		<link name="${prefix}_j1_link">
+			<visual>
+				<origin xyz="0 0 -${base_to_j1/2}" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${base_to_j1}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 -${base_to_j1/2}" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${base_to_j1}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="1"/>
+				<inertia ixx="1" ixy="1" ixz="1"
+							 	 iyy="1" iyz="1"
+								 		 izz="1"/>
+			</inertial>
+		</link>
+		
+		<joint name="${prefix}_j1" type="revolute">
+			<parent link="${parent}"/>
+			<child link="${prefix}_j1_link"/>
+			<axis xyz="0 0 1"/>
+			<dynamics damping="0.0" friction="0.5"/>
+			<limit lower="-3.14" upper="3.14" velocity=".25" effort="300"/>
+			<xacro:insert_block name="origin"/>
+		</joint>
+		
+		
+		<!-- JOINT 2 -->
+		<link name="${prefix}_j2_link">
+			<!-- MOTOR -->
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${motor_height}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${motor_height}"/>
+				</geometry>
+			</collision>
+			
+			<!-- LINK -->
+			<visual>
+				<origin xyz="0 ${j2_to_j3/2} 0" rpy="1.57079632679 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${j2_to_j3}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 ${j2_to_j3/2} 0" rpy="1.57079632679 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${j2_to_j3}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin xyz="0 ${j2_to_j3/2} 0" rpy="0 0 0"/>
+				<mass value="1"/>
+				<inertia ixx="1" ixy="1" ixz="1"
+							 	 iyy="1" iyz="1"
+								 		 izz="1"/>
+			</inertial>
+		</link>
+		
+		<joint name="${prefix}_j2" type="revolute">
+			<origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+			<parent link="${prefix}_j1_link"/>
+			<child link="${prefix}_j2_link"/>
+			<axis xyz="0 0 1"/>
+			<dynamics damping="0.0" friction="0.5"/>
+			<limit lower="-3.14" upper="3.14" velocity=".25" effort="300"/>
+		</joint>
+		
+		<!-- JOINT 3 -->
+		<link name="${prefix}_j3_link">
+
+			<!-- LINK -->
+			<visual>
+				<origin xyz="0 0 ${j3_to_j4/2}" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${j3_to_j4}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 ${j3_to_j4/2}" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${j3_to_j4}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin xyz="0 ${j3_to_j4/2} 0" rpy="0 0 0"/>
+				<mass value="1"/>
+				<inertia ixx="1" ixy="1" ixz="1"
+							 	 iyy="1" iyz="1"
+								 		 izz="1"/>
+			</inertial>
+		</link>
+		
+		<joint name="${prefix}_j3" type="revolute">
+			<origin xyz="0 ${j2_to_j3} 0" rpy="-1.57079632679 0 0"/>
+			<parent link="${prefix}_j2_link"/>
+			<child link="${prefix}_j3_link"/>
+			<axis xyz="0 0 1"/>
+			<dynamics damping="0.0" friction="0.5"/>
+			<limit lower="-3.14" upper="3.14" velocity=".25" effort="300"/>
+		</joint>
+		
+		<!-- JOINT 4 -->
+		<link name="${prefix}_j4_link">
+			<!-- MOTOR -->
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${motor_height}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${motor_height}"/>
+				</geometry>
+			</collision>
+			
+			<!-- LINK -->
+			<visual>
+				<origin xyz="0 ${j4_to_j5/2} 0" rpy="1.57079632679 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${j4_to_j5}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 ${j4_to_j5/2} 0" rpy="1.57079632679 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/2}" length="${j4_to_j5}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin xyz="0 ${j4_to_j5/2} 0" rpy="0 0 0"/>
+				<mass value="1"/>
+				<inertia ixx="1" ixy="1" ixz="1"
+							 	 iyy="1" iyz="1"
+								 		 izz="1"/>
+			</inertial>
+		</link>
+		
+		<joint name="${prefix}_j4" type="revolute">
+			<origin xyz="0 0 ${j3_to_j4}" rpy="1.57079632679 0 0"/>
+			<parent link="${prefix}_j3_link"/>
+			<child link="${prefix}_j4_link"/>
+			<axis xyz="0 0 1"/>
+			<dynamics damping="0.0" friction="0.5"/>
+			<limit lower="-3.14" upper="3.14" velocity=".25" effort="300"/>
+		</joint>
+		
+		<!-- JOINT 5 -->
+		<link name="${prefix}_j5_link">
+
+			<!-- LINK -->
+			<visual>
+				<origin xyz="0 0 ${ee_length/2}" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/3}" length="${ee_length}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 ${ee_length/2}" rpy="0 0 0"/>
+				<geometry>
+					<cylinder radius="${link_diameter/3}" length="${ee_length}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin xyz="0 ${j3_to_j4/2} 0" rpy="0 0 0"/>
+				<mass value="1"/>
+				<inertia ixx="1" ixy="1" ixz="1"
+							 	 iyy="1" iyz="1"
+								 		 izz="1"/>
+			</inertial>
+		</link>
+		
+		<joint name="${prefix}_j5" type="revolute">
+			<origin xyz="0 ${j4_to_j5} 0" rpy="-1.57079632679 0 0"/>
+			<parent link="${prefix}_j4_link"/>
+			<child link="${prefix}_j5_link"/>
+			<axis xyz="0 0 1"/>
+			<dynamics damping="0.0" friction="0.5"/>
+			<limit lower="-3.14" upper="3.14" velocity=".25" effort="300"/>
+		</joint>
+		
+		
+		<!-- TRANSMISSIONS -->
+		<transmission name="${prefix}_j1">
+			<type>tranmssion_interface/SimpleTransmission</type>
+			<joint name="${prefix}_j1">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="$[prefix}_motor1">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}_j2">
+			<type>tranmssion_interface/SimpleTransmission</type>
+			<joint name="${prefix}_j2">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="$[prefix}_motor2">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}_j3">
+			<type>tranmssion_interface/SimpleTransmission</type>
+			<joint name="${prefix}_j3">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="$[prefix}_motor3">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}_j4">
+			<type>tranmssion_interface/SimpleTransmission</type>
+			<joint name="${prefix}_j4">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="$[prefix}_motor4">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<transmission name="${prefix}_j5">
+			<type>tranmssion_interface/SimpleTransmission</type>
+			<joint name="${prefix}_j5">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="$[prefix}_motor5">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+	
+	</xacro:macro>
+</robot>
