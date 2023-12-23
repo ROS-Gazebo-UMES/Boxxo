@@ -4,6 +4,7 @@
 <robot name="boxxo" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:include filename="$(find boxxo_core)/urdf/wheel.urdf.xacro"/>
+	<xacro:include filename="$(find boxxo_core)/urdf/boxxo_arm.urdf.xacro"/>
     
     <!-- Chassis Properties -->
 	<xacro:property name="chassis_length" value="1.6256"/>
@@ -18,6 +19,11 @@
 	<xacro:property name="wheel_x_spacing" value="${chassis_length/2}"/>
 	<xacro:property name="wheel_y_spacing" value="${chassis_width/2}"/>
 	<xacro:property name="wheel_z_spacing" value="${chassis_height/4}"/>
+	
+	<!-- Arm Location -->
+	<xacro:property name="boxxo_arm_x" value=".2064"/>
+	<xacro:property name="boxxo_arm_y" value=".3"/>
+	<xacro:property name="boxxo_arm_z" value=".4"/>
 	
 	<link name="base_link"/>
 	
@@ -64,5 +70,16 @@
 		<origin xyz="-${wheel_x_spacing} ${wheel_y_spacing + (wheel_depth/2)} ${wheel_z_spacing}" rpy="0 0 0"/>
 		<inertia ixx="0.08" ixy="0.0" ixz="0.0" iyy="0.14" iyz="0.0" izz="0.08"/>
 	</xacro:wheel>
+	
+	
+	<xacro:boxxo_arm endeffector="" prefix="left" parent="chassie">
+		<origin xyz="${boxxo_arm_x} ${boxxo_arm_y} ${boxxo_arm_z}" rpy="0 0 0"/>
+	</xacro:boxxo_arm>
+	<xacro:boxxo_arm endeffector="" prefix="right" parent="chassie">
+		<origin xyz="${boxxo_arm_x} -${boxxo_arm_y} ${boxxo_arm_z}" rpy="0 0 0"/>
+	</xacro:boxxo_arm>
+	
+	
+	
 	
 </robot>
