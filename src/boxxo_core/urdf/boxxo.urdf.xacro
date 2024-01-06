@@ -3,6 +3,14 @@
 
 <robot name="boxxo" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+
+	<gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>boxxo</robotNamespace>
+        </plugin>
+    </gazebo>
+
+
 	<xacro:include filename="$(find boxxo_core)/urdf/wheel.urdf.xacro"/>
 	<xacro:include filename="$(find boxxo_core)/urdf/boxxo_arm.urdf.xacro"/>
 	<xacro:include filename="$(find boxxo_core)/urdf/camera.urdf.xacro"/>
