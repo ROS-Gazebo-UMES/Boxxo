@@ -40,7 +40,7 @@
 		<joint name="${prefix}_wheel">
 			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
 		</joint>
-		<actuator>
+		<actuator name="${prefix}_motor">
 			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
 			<mechanicalreduction>1</mechanicalreduction>
 		</actuator>

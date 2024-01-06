@@ -27,8 +27,8 @@
                 <origin xyz="${camera_height/2} 0 0" rpy="0 0 0"/>
                 <mass value="1"/>
                 <inertia ixx="1" ixy="0" ixz="0" 
-                                iyy="1" iyz="0" 
-                                        izz="1"/>
+                                 iyy="1" iyz="0" 
+                                         izz="1"/>
             </inertial>
         </link>
 
@@ -66,8 +66,8 @@
             <plugin name="${prefix}_camera_controller" filename="libgazebo_ros_camera.so">
                 <alwaysOn>true</alwaysOn>
                 <updateRate>0.0</updateRate>
-                <cameraName>/boxxo/${prefix}_camera1</cameraName>
-                <robotNamespace>/boxxo</robotNamespace>
+                <!-- Don't need to add a "/boxxo" namespace to cameraName, it adds it automatically! -->
+                <cameraName>${prefix}_camera1</cameraName>
                 <tf_prefix_>""</tf_prefix_>
                 <imageTopicName>/boxxo/${prefix}_camera/camera_image_node/images</imageTopicName>
                 <cameraInfoTopicName>/boxxo/${prefix}_camera/camera_image_node/camera_info</cameraInfoTopicName>
