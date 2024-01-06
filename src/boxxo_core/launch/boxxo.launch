@@ -1,0 +1,47 @@
+<launch>
+    <arg name="robot_name" default="boxxo"/>
+    <arg name="gui" default="true" />
+    <arg name="address" default="$(find boxxo_core)/urdf/$(arg robot_name).urdf.xacro"/>
+    <param name="boxxo/robot_description" command="rosrun xacro xacro $(arg address)" />
+
+    <!-- Starts Gazebo with the world/reality we want to exist in -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <!-- <arg name="world_name" value="path to world"/> -->
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="recording" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <!-- Spawn loactions for robot -->
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="z" default="4.5" />
+    <arg name="roll" default="0" />
+    <arg name="pitch" default="0" />
+    <arg name="yaw" default="0" />
+
+    <!-- Actually summon the robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" ns="boxxo"
+        args="-urdf -model $(arg robot_name) -param robot_description 
+            -x $(arg x) -y $(arg y) -z $(arg z) 
+            -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
+    
+
+
+    <!-- converts joints states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
+        respawn="false" output="screen" ns="boxxo"/>
+    
+    <!-- collect controllers from yaml -->
+    <rosparam file="$(find boxxo_core)/control/boxxo_controllers.yaml" command="load"/>
+    
+    <!-- Spawn in the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        respawn="false" output="screen" ns="boxxo"
+        args="
+            joint_state_publisher
+            joint_group_velocity_controller
+        "/>
+</launch>

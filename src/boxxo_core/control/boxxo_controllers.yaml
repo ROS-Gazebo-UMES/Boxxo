@@ -1,0 +1,32 @@
+boxxo:
+##############################################################################################
+###                                                                                        ###    
+###   Boxxo Joint State Publisher                                                          ###
+###                                                                                        ###
+##############################################################################################
+  joint_state_publisher:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+##############################################################################################
+###                                                                                        ###    
+###   Boxxo Controller Group                                                               ###
+###                                                                                        ###
+##############################################################################################
+  joint_group_velocity_controller:
+    type: velocity_controllers/JointGroupVelocityController
+    joints:
+      - front_left_wheel
+      - front_right_wheel
+      - rear_left_wheel
+      - rear_right_wheel
+      - left_j1
+      - left_j2
+      - left_j3
+      - left_j4
+      - left_j5
+      - right_j1
+      - right_j2
+      - right_j3
+      - right_j4
+      - right_j5
