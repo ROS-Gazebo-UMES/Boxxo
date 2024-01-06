@@ -5,12 +5,14 @@
 
 	<xacro:include filename="$(find boxxo_core)/urdf/wheel.urdf.xacro"/>
 	<xacro:include filename="$(find boxxo_core)/urdf/boxxo_arm.urdf.xacro"/>
+	<xacro:include filename="$(find boxxo_core)/urdf/camera.urdf.xacro"/>
+
     
     <!-- Chassis Properties -->
 	<xacro:property name="chassis_length" value="1.6256"/>
 	<xacro:property name="chassis_width" value="1.2446"/>
 	<xacro:property name="chassis_height" value="0.25"/>
-	<xacro:property name="chassis_mass" value="0"/>
+	<xacro:property name="chassis_mass" value="200"/>
 	
 	<!-- Wheel Properties -->
 	<xacro:property name="wheel_depth" value="0.1286"/>
@@ -72,12 +74,16 @@
 	</xacro:wheel>
 	
 	
-	<xacro:boxxo_arm endeffector="" prefix="left" parent="chassie">
+	<xacro:boxxo_arm endeffector="camera" prefix="left" parent="chassie">
 		<origin xyz="${boxxo_arm_x} ${boxxo_arm_y} ${boxxo_arm_z}" rpy="0 0 0"/>
 	</xacro:boxxo_arm>
-	<xacro:boxxo_arm endeffector="" prefix="right" parent="chassie">
+	<xacro:boxxo_arm endeffector="camera" prefix="right" parent="chassie">
 		<origin xyz="${boxxo_arm_x} -${boxxo_arm_y} ${boxxo_arm_z}" rpy="0 0 0"/>
 	</xacro:boxxo_arm>
+
+	<xacro:boxxo_camera prefix="body" parent="chassie">
+		<origin xyz="${chassis_length/2-0.04} 0.25 ${chassis_height+0.02}" rpy="0 0 0"/>
+	</xacro:boxxo_camera>
 	
 	
 	

@@ -2,7 +2,9 @@
 
 <robot name="boxxo_arm" xmlns:xacro="https://wiki.ros.org/xacro">
 	
-	<!-- <xacro:include filename=""/> -->
+
+	<xacro:include filename="$(find boxxo_core)/urdf/camera.urdf.xacro"/>
+
 	<xacro:macro name="boxxo_arm" params="endeffector prefix parent *origin">
 	
 		<xacro:property name="motor_height" value=".15"/>
@@ -215,6 +217,12 @@
 			<limit lower="-3.14" upper="3.14" velocity=".25" effort="300"/>
 		</joint>
 		
+		<!-- ENDEFFECTOR IF STATEMENT -->
+		<xacro:if value="${endeffector == 'camera'}">
+			<xacro:boxxo_camera prefix="${prefix}" parent="${prefix}_j5_link">
+				<origin xyz="0 0 ${ee_length}" rpy="0 -1.57079632679 0"/>
+			</xacro:boxxo_camera>
+		</xacro:if>
 		
 		<!-- TRANSMISSIONS -->
 		<transmission name="${prefix}_j1">
