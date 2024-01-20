@@ -1,12 +1,12 @@
 <launch>
     <arg name="robot_name" default="boxxo"/>
-    <arg name="gui" default="true" />
+    <arg name="gui" default="false" />
     <arg name="address" default="$(find boxxo_core)/urdf/$(arg robot_name).urdf.xacro"/>
     <param name="boxxo/robot_description" command="rosrun xacro xacro $(arg address)" />
 
     <!-- Starts Gazebo with the world/reality we want to exist in -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <!-- <arg name="world_name" value="path to world"/> -->
+        <arg name="world_name" value="$(find boxxo_worlds)/worlds/test_world.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="$(arg gui)"/>
@@ -27,8 +27,6 @@
         args="-urdf -model $(arg robot_name) -param robot_description 
             -x $(arg x) -y $(arg y) -z $(arg z) 
             -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
-    
-
 
     <!-- converts joints states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" 
@@ -43,10 +41,11 @@
         args="
             joint_state_publisher
             joint_group_velocity_controller
+            boxxo_diff_drive
         "/>
 
-    <node name="image_stream_1" pkg="image_view" type="image_view" args="image:=/boxxo/left_camera/camera_image_node/images"/>
-    <node name="image_stream_2" pkg="image_view" type="image_view" args="image:=/boxxo/right_camera/camera_image_node/images"/>
+    <!-- <node name="image_stream_1" pkg="image_view" type="image_view" args="image:=/boxxo/left_camera/camera_image_node/images"/> -->
+    <!-- <node name="image_stream_2" pkg="image_view" type="image_view" args="image:=/boxxo/right_camera/camera_image_node/images"/> -->
     <node name="image_stream_3" pkg="image_view" type="image_view" args="image:=/boxxo/body_camera/camera_image_node/images"/>
     
 </launch>
