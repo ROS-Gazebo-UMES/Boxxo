@@ -1,0 +1,7 @@
+<library path="lib/libboxxo_arm_lib">
+    <class
+        name="boxxo_controller/BoxxoArm"
+        type="boxxo_arm_controller::BoxxoArm"
+        base_class_type="controller_interface::ControllerBase"
+    />
+</library>

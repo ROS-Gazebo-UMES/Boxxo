@@ -40,8 +40,8 @@
         respawn="false" output="screen" ns="boxxo"
         args="
             joint_state_publisher
-            joint_group_velocity_controller
             boxxo_diff_drive
+            boxxo_left_pos
         "/>
 
     <!-- <node name="image_stream_1" pkg="image_view" type="image_view" args="image:=/boxxo/left_camera/camera_image_node/images"/> -->

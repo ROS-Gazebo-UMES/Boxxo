@@ -10,28 +10,25 @@ boxxo:
 
 ##############################################################################################
 ###                                                                                        ###    
-###   Boxxo Controller Group                                                               ###
-###                                                                                        ###
-##############################################################################################
-  joint_group_velocity_controller:
-    type: velocity_controllers/JointGroupVelocityController
-    joints:
-      - left_j1
-      - left_j2
-      - left_j3
-      - left_j4
-      - left_j5
-      - right_j1
-      - right_j2
-      - right_j3
-      - right_j4
-      - right_j5
-
-##############################################################################################
-###                                                                                        ###    
 ###   Boxxo Fun Group                                                                      ###
 ###                                                                                        ###
 ##############################################################################################
+  boxxo_left_pos:
+    type: boxxo_controller/BoxxoArm
+    joint1: left_j1
+    joint2: left_j2
+    joint3: left_j3
+    joint4: left_j4
+    joint5: left_j5
+  
+  # boxxo_right_pos:
+  #   type: boxxo_controller/BoxxoArm
+  #   joint1: right_j1
+  #   joint2: right_j2
+  #   joint3: right_j3
+  #   joint4: right_j4
+  #   joint5: right_j5
+
   boxxo_diff_drive:
     type: diff_drive_controller/DiffDriveController
     left_wheel: ['front_left_wheel', 'rear_left_wheel']
