@@ -5,11 +5,11 @@
 #include <ros/ros.h>
 #include <std_msgs/Float64MultiArray.h>
 
-namespace boxxo_arm_controller {
+namespace boxxo_controllers {
     class BoxxoArm : public controller_interface::Controller<hardware_interface::PositionJointInterface>{
         public:
             bool init(hardware_interface::PositionJointInterface* hardware, ros::NodeHandle &node_handler){
-
+		ROS_INFO("FAT BALLS");
                 std::string joint1;
                 std::string joint2;
                 std::string joint3;
@@ -115,5 +115,5 @@ namespace boxxo_arm_controller {
             hardware_interface::JointHandle j4;
             hardware_interface::JointHandle j5;
     };
-    PLUGINLIB_EXPORT_CLASS(boxxo_arm_controller::BoxxoArm, controller_interface::ControllerBase);
+    PLUGINLIB_EXPORT_CLASS(boxxo_controllers::BoxxoArm, controller_interface::ControllerBase);
 }
