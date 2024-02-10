@@ -14,7 +14,7 @@ boxxo:
 ###                                                                                        ###
 ##############################################################################################
   boxxo_left_pos:
-    type: boxxo_controllers/BoxxoArm
+    type: boxxo_controller/BoxxoArm
     joint1: left_j1
     joint2: left_j2
     joint3: left_j3

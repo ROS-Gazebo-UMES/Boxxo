@@ -6,10 +6,9 @@
 #include <std_msgs/Float64MultiArray.h>
 
 namespace boxxo_controllers {
-    class BoxxoArm : public controller_interface::Controller<hardware_interface::PositionJointInterface>{
+    class BoxxoArm : public controller_interface::Controller<hardware_interface::VelocityJointInterface>{
         public:
-            bool init(hardware_interface::PositionJointInterface* hardware, ros::NodeHandle &node_handler){
-		ROS_INFO("FAT BALLS");
+            bool init(hardware_interface::VelocityJointInterface* hardware, ros::NodeHandle &node_handler){
                 std::string joint1;
                 std::string joint2;
                 std::string joint3;
